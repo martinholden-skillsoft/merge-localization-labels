@@ -8,9 +8,9 @@ const localLogger = require('./lib/logger');
 
 class MergeLocalizationLabels {
   constructor(options) {
-    this._name = 'MergeProperties';
+    this._name = 'MergeLocalizationLabels';
 
-    this._comment = options.comment || 'Generated using successfactors-localization tool';
+    this._comment = options.comment || 'Generated using MergeLocalizationLabels tool';
 
     const loggingOptions = {
       label: `${this._name}:constructor`
@@ -111,8 +111,6 @@ class MergeLocalizationLabels {
       file: destFile,
       comment
     };
-
-    // .join('\n');
 
     this.logger.debug(`Writing Merged Properties to : ${destFile}`, loggingOptions);
 

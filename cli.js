@@ -8,6 +8,8 @@ const { transports } = require('winston');
 const logger = require('./lib/logger');
 const MergeLocalizationLabels = require('./index');
 
+const appVersion = require('./package.json').version;
+
 /**
  * Create the specified folder path
  *
@@ -30,7 +32,7 @@ const makeFolder = fullPath => {
  */
 const mergeLabels = async options => {
   const loggingOptions = {
-    label: 'successfactors-localization-cli:mergeLabels'
+    label: 'merge-localization-labels:mergeLabels'
   };
 
   const MergeLocalizationLabelsOptions = {
@@ -56,10 +58,8 @@ const mergeLabels = async options => {
  */
 const main = () => {
   const loggingOptions = {
-    label: 'successfactors-localization-cli:main'
+    label: 'merge-localization-labels:main'
   };
-
-  logger.info('Process Started', loggingOptions);
 
   const program = new commander.Command();
 
@@ -75,7 +75,7 @@ const main = () => {
   program.on('option:logtofile', () => {
     const logfilename = `${moment()
       .utc()
-      .format('YYYYMMDD_HHmmss')}_successfactors_localization.log`;
+      .format('YYYYMMDD_HHmmss')}_merge_localization_labels.log`;
 
     // Add logging to a file
     logger.add(
@@ -90,6 +90,8 @@ const main = () => {
 
   program
     .storeOptionsAsProperties(false)
+    .name('merge-localization-labels')
+    .version(appVersion)
     .requiredOption('-s, --source <file>', 'The source locale label file', stringTrim)
     .requiredOption('-t, --target <file>', 'The target locale label file', stringTrim)
     .requiredOption('-o, --output <file>', 'The output file', stringTrim)
@@ -97,6 +99,8 @@ const main = () => {
     .option('-l, --logtofile', 'Log to a file in logs folder');
 
   program.parse(process.argv);
+
+  logger.info('Process Started', loggingOptions);
 
   const options = program.opts();
   logger.debug(`Command Line Options: ${JSON.stringify(options)}`, loggingOptions);
