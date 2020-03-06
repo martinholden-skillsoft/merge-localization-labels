@@ -1,0 +1,48 @@
+{
+	"name": "merge-localization-labels",
+	"version": "0.0.0",
+	"description": "Tool to merge localization labels, all those in source but not in target are added",
+	"repository": {
+		"type": "git",
+		"url": "git+ssh://git@github.com/martinholden-skillsoft/merge-localization-labels.git"
+	},
+	"main": "index.js",
+	"bin": {
+		"merge-localization-labels": "cli.js"
+	},
+	"scripts": {
+		"start": "",
+		"lint": "eslint **/*.js",
+		"preversion": "",
+		"postversion": "git push && git push --tags && npm run changelog && git push ",
+		"postinstall": "",
+		"changelog": "rimraf CHANGELOG.md && auto-changelog --template keepachangelog && git add . && git commit . -m changelog && git push"
+	},
+	"keywords": [
+		"SuccessFactors",
+		"Localization",
+		"Import Labels"
+	],
+	"author": "Martin Holden &lt;martin.holden@skillsoft.com&gt;",
+	"license": "MIT",
+	"dependencies": {
+		"commander": "^4.1.1",
+		"deep-diff": "^1.0.2",
+		"lodash": "^4.17.15",
+		"moment": "^2.24.0",
+		"promise-retry": "^1.1.1",
+		"properties-reader": "^1.0.0",
+		"winston": "^3.2.1"
+	},
+	"devDependencies": {
+		"auto-changelog": "^1.16.1",
+		"babel-eslint": "^10.0.3",
+		"eslint": "^6.3.0",
+		"eslint-config-airbnb-base": "^14.0.0",
+		"eslint-config-prettier": "^6.6.0",
+		"eslint-plugin-import": "^2.18.2",
+		"eslint-plugin-prettier": "^3.1.0",
+		"prettier": "^1.19.1",
+		"rimraf": "^3.0.0"
+	}
+}
