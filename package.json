@@ -26,7 +26,7 @@
 	"author": "Martin Holden &lt;martin.holden@skillsoft.com&gt;",
 	"license": "MIT",
 	"dependencies": {
-		"commander": "^4.1.1",
+		"commander": "^5.0.0",
 		"deep-diff": "^1.0.2",
 		"lodash": "^4.17.15",
 		"moment": "^2.24.0",
