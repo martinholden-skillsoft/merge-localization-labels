@@ -15,7 +15,7 @@ const appVersion = require('./package.json').version;
  *
  * @param {*} fullPath
  */
-const makeFolder = fullPath => {
+const makeFolder = (fullPath) => {
   const path = fullPath.replace(/\/$/, '').split('/');
   for (let i = 1; i <= path.length; i += 1) {
     const segment = path.slice(0, i).join('/');
@@ -30,15 +30,15 @@ const makeFolder = fullPath => {
  *
  * @param {*} options The command line options
  */
-const mergeLabels = async options => {
+const mergeLabels = async (options) => {
   const loggingOptions = {
-    label: 'merge-localization-labels:mergeLabels'
+    label: 'merge-localization-labels:mergeLabels',
   };
 
   const MergeLocalizationLabelsOptions = {
     lhs: options.target,
     rhs: options.source,
-    logger
+    logger,
   };
 
   // Split the output file and create folder if necessary
@@ -46,7 +46,7 @@ const mergeLabels = async options => {
 
   logger.debug(`Preparing to Merge Labels`, loggingOptions);
   const merger = new MergeLocalizationLabels(MergeLocalizationLabelsOptions);
-  await merger.writeMergedProperties(options.output).then(data => {
+  await merger.writeMergedProperties(options.output).then((data) => {
     logger.info(`Labels Merged. Results: ${JSON.stringify(data)}`, loggingOptions);
   });
   logger.info(`Labels Merged`, loggingOptions);
@@ -58,12 +58,12 @@ const mergeLabels = async options => {
  */
 const main = () => {
   const loggingOptions = {
-    label: 'merge-localization-labels:main'
+    label: 'merge-localization-labels:main',
   };
 
   const program = new commander.Command();
 
-  const stringTrim = value => {
+  const stringTrim = (value) => {
     // parseInt takes a string and an optional radix
     return value.trim();
   };
@@ -73,17 +73,15 @@ const main = () => {
   });
 
   program.on('option:logtofile', () => {
-    const logfilename = `${moment()
-      .utc()
-      .format('YYYYMMDD_HHmmss')}_merge_localization_labels.log`;
+    const logfilename = `${moment().utc().format('YYYYMMDD_HHmmss')}_merge_localization_labels.log`;
 
     // Add logging to a file
     logger.add(
       new transports.File({
         filename: Path.join('logs', logfilename),
         options: {
-          flags: 'w'
-        }
+          flags: 'w',
+        },
       })
     );
   });

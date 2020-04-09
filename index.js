@@ -13,7 +13,7 @@ class MergeLocalizationLabels {
     this._comment = options.comment || 'Generated using MergeLocalizationLabels tool';
 
     const loggingOptions = {
-      label: `${this._name}:constructor`
+      label: `${this._name}:constructor`,
     };
 
     this.logger = options.logger || localLogger;
@@ -33,11 +33,7 @@ class MergeLocalizationLabels {
 
     this._lhsProperties = PropertiesReader(options.lhs).getAllProperties() || {};
     // Sort the objects
-    this._lhsProperties = _(this._lhsProperties)
-      .toPairs()
-      .sortBy(0)
-      .fromPairs()
-      .value();
+    this._lhsProperties = _(this._lhsProperties).toPairs().sortBy(0).fromPairs().value();
 
     this.logger.debug(
       `Left Hand Side Properties Loaded: ${JSON.stringify(this._lhsProperties)}`,
@@ -47,11 +43,7 @@ class MergeLocalizationLabels {
     this._rhsProperties = PropertiesReader(options.rhs).getAllProperties() || {};
 
     // Sort the objects
-    this._rhsProperties = _(this._rhsProperties)
-      .toPairs()
-      .sortBy(0)
-      .fromPairs()
-      .value();
+    this._rhsProperties = _(this._rhsProperties).toPairs().sortBy(0).fromPairs().value();
 
     this.logger.debug(
       `Right Hand Side Properties Loaded: ${JSON.stringify(this._rhsProperties)}`,
@@ -63,12 +55,12 @@ class MergeLocalizationLabels {
 
   getMergedProperties() {
     const loggingOptions = {
-      label: `${this._name}:getMergedProperties`
+      label: `${this._name}:getMergedProperties`,
     };
 
     this._mergedProperties = this._lhsProperties;
 
-    diff.observableDiff(this._lhsProperties, this._rhsProperties, difference => {
+    diff.observableDiff(this._lhsProperties, this._rhsProperties, (difference) => {
       // Apply all changes except where lhs already has a value...
       if (difference.kind !== 'E') {
         this.logger.debug(
@@ -79,11 +71,7 @@ class MergeLocalizationLabels {
       }
     });
 
-    this._mergedProperties = _(this._mergedProperties)
-      .toPairs()
-      .sortBy(0)
-      .fromPairs()
-      .value();
+    this._mergedProperties = _(this._mergedProperties).toPairs().sortBy(0).fromPairs().value();
 
     this.logger.debug(
       `Merged Properties: ${JSON.stringify(this._mergedProperties)}`,
@@ -95,7 +83,7 @@ class MergeLocalizationLabels {
 
   async writeMergedProperties(destFile) {
     const loggingOptions = {
-      label: `${this._name}:writeMergedProperties`
+      label: `${this._name}:writeMergedProperties`,
     };
 
     // Convert properties object to string content
@@ -109,13 +97,13 @@ class MergeLocalizationLabels {
     const results = {
       count: content.length,
       file: destFile,
-      comment
+      comment,
     };
 
     this.logger.debug(`Writing Merged Properties to : ${destFile}`, loggingOptions);
 
     return new Promise((resolve, reject) => {
-      fs.writeFile(destFile, content.join('\n'), err => {
+      fs.writeFile(destFile, content.join('\n'), (err) => {
         if (err) {
           reject(err);
         } else {
